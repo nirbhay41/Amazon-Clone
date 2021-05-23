@@ -1,0 +1,67 @@
+$light: #232F3E;
+$default: #131921; 
+
+// .header {}
+.top_nav {
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    background-color: $default;
+    max-height: 70px;
+    color: white;
+}
+
+.nav_logo{
+    margin: 0 20px 0 10px;
+    display: flex;
+    place-items: center;
+    &>span{
+        margin-bottom: 7px;
+    }
+}
+
+.logo {
+    cursor: pointer;
+}
+
+.select_addr{
+    margin: 0 20px 0 0px;
+
+    .location_icon{
+        height: 20px;
+    }
+
+    div:nth-child(1){
+        font-size: 12px;
+        margin-left: 20px;
+    }
+
+    & span{
+        font-weight: bold;
+        font-size: 0.94rem;
+    }
+}
+
+.searchBar{
+    flex:0.98;
+}
+
+.carticon{
+    height: 40px;
+}
+
+.orders{
+    font-size: 0.94rem;
+    font-weight: bold;
+    margin: 0 10px 0 5px;
+}
+
+.cart{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    // margin: 0 0 0 10px;
+    transform: translateX(10px);
+}

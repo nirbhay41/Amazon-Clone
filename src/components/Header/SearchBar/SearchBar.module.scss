@@ -1,0 +1,34 @@
+.searchBar {
+    form {
+        display: flex;
+        .category_selector {
+            display: flex;
+            border: none;
+            border-radius: 10px 0 0 10px;
+        }
+
+        .input_bar {
+            flex:1;
+            input{
+                width: 100%;
+                height: 100%;
+                border-radius: 0;
+                border: none;
+            }
+        }
+
+        .searchBtn {
+            background-color: #febd69;
+            border-radius: 0 5px 5px 0px;
+            width: 3rem;
+            height: 3rem;
+            border: none;
+            display: grid;
+            place-content: center;
+
+            .searchicon {
+                height: 30px;
+            }
+        }
+    }
+}
