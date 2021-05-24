@@ -36,10 +36,12 @@ export default function Header() {
                 </div>
 
                 <div className={styles.orders}>
-                    Orders
+                    <div>Returns</div>
+                    &Orders
                 </div>
 
                 <div className={styles.cart}>
+                    <span className={styles.order_no}>0</span>
                     <ShoppingCartIcon className={styles.carticon} />
                     <span>Cart</span>
                 </div>

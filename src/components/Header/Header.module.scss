@@ -9,12 +9,12 @@ $default: #131921;
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
     background-color: $default;
-    max-height: 70px;
+    max-height: 60px;
     color: white;
 }
 
 .nav_logo{
-    margin: 0 20px 0 10px;
+    margin: 0 15px 0 3px;
     display: flex;
     place-items: center;
     &>span{
@@ -28,7 +28,7 @@ $default: #131921;
 
 .select_addr{
     margin: 0 20px 0 0px;
-
+    cursor: pointer;
     .location_icon{
         height: 20px;
     }
@@ -40,7 +40,7 @@ $default: #131921;
 
     & span{
         font-weight: bold;
-        font-size: 0.94rem;
+        font-size: 0.90rem;
     }
 }
 
@@ -48,20 +48,49 @@ $default: #131921;
     flex:0.98;
 }
 
-.carticon{
-    height: 40px;
-}
-
 .orders{
     font-size: 0.94rem;
     font-weight: bold;
     margin: 0 10px 0 5px;
+    cursor: pointer;
+    div{
+        font-size: 12px;
+        font-weight: 300;
+    }
 }
 
 .cart{
+    position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
+
+    .order_no{
+        position: absolute;
+        top: -8px;
+        right: 30px;
+        height: 1rem;
+        width: 1rem;
+        background-color: yellow;
+        text-align: center;
+        border-radius: 9999px;
+        color: black;
+        font-weight: bold;
+    }
+
+    .carticon{
+        height: 40px;
+    }
+    span:last-of-type{
+        display: none;
+        margin-top: 5px;    
+        @media screen and (min-width:1024px) {
+            display: inline;
+        }
+    }
     // margin: 0 0 0 10px;
-    transform: translateX(10px);
+    @media screen and (min-width:1024px) {
+        transform: translateX(5px);   
+    }
 }
