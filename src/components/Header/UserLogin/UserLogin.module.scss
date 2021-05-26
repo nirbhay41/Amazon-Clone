@@ -8,5 +8,12 @@
     div:nth-child(2){
         font-size: 0.94rem;
         font-weight: bold;
+        @media screen and (max-width: 821px) {
+            font-size: 12px;
+        }
+
+        // @media screen and (max-width: 444px) {
+        //     font-size: 10px;
+        // }
     }
 }

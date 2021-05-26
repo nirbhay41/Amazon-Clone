@@ -1,6 +1,6 @@
 import Image from "next/image";
 import styles from './Header.module.scss';
-import { LocationMarkerIcon, ShoppingCartIcon } from '@heroicons/react/outline';
+import { ShoppingCartIcon } from '@heroicons/react/outline';
 import SearchBar from './SearchBar/SearchBar';
 import UserLogin from './UserLogin/UserLogin';
 
@@ -19,14 +19,6 @@ export default function Header() {
                     <span>.in</span>
                 </div>
 
-                <div className={styles.select_addr}>
-                    <div>Hello</div>
-                    <div style={{ "display": "flex" }}>
-                        <LocationMarkerIcon className={styles.location_icon} />
-                        <span>Select your address</span>
-                    </div>
-                </div>
-
                 <div className={styles.searchBar}>
                     <SearchBar />
                 </div>
@@ -37,13 +29,15 @@ export default function Header() {
 
                 <div className={styles.orders}>
                     <div>Returns</div>
-                    &Orders
+                    <p>&Orders</p>
                 </div>
 
                 <div className={styles.cart}>
-                    <span className={styles.order_no}>0</span>
-                    <ShoppingCartIcon className={styles.carticon} />
-                    <span>Cart</span>
+                    <div className={styles.cart_no} style={{position: "relative"}}>
+                        <span className={styles.order_no}>0</span>
+                        <ShoppingCartIcon className={styles.carticon} />
+                    </div>
+                    <span className={styles.cart_text}>Cart</span>
                 </div>
             </div>
 

@@ -47,7 +47,7 @@ export default function SearchBar() {
                 </div>
 
                 <div className={styles.input_bar}>
-                    <input type="text" value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Search an item"/>
+                    <input type="text" value={query} onChange={(e) => setQuery(e.target.value)} />
                 </div>
 
                 <button type="submit" className={styles.searchBtn}>

@@ -18,6 +18,10 @@
                 background-image: url("data:image/svg+xml;utf8,<svg fill='black' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>");
                 background-repeat: no-repeat;
                 background-position: calc(100%) center !important;
+                text-transform: capitalize;
+            }
+            @media screen and (max-width: 700px){
+                display: none;
             }
         }
 
@@ -32,21 +36,24 @@
                 outline: none;
                 font-size: 1rem;
                 font-weight: 400;
+                padding-left: 10px;
+                @media screen and (max-width: 700px){
+                    border-radius: 5px 0 0 5px;
+                }
             }
         }
 
         .searchBtn {
-            background-color: #febd69;
+            background-color: rgba(251,191,36,1);
             border-radius: 0 5px 5px 0px;
             width: 3rem;
-            height: 100%;
             border: none;
             display: grid;
             place-content: center;
             cursor: pointer;
 
             .searchicon {
-                height: 30px;
+                height: 25px;
             }
         }
     }
