@@ -1,22 +1,13 @@
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import styles from './SearchBar.module.scss';
 import { SearchIcon } from '@heroicons/react/outline';
 
-async function getCategories(): Promise<Array<string>> {
-    const res = await fetch('https://fakestoreapi.com/products/categories');
-    const categories = await res.json();
-    return categories;
-}
 
-export default function SearchBar() {
-    const [categories, setCategories] = useState<string[]>([]);
+export default function SearchBar({categories}:{categories:string[]}) {
     const [query, setQuery] = useState('');
     const [mouseOver, setMouseOver] = useState(false);
     const selectRef = useRef<HTMLSelectElement>(null);
 
-    useEffect(() => {
-        getCategories().then(res => setCategories(res));
-    }, [])
 
     const addOutline = {
         outline: "3px solid #ffa600",

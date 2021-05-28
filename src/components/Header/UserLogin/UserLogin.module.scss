@@ -1,5 +1,5 @@
 .userlogin{
-    margin: 0 10px 0 15px;
+    margin: 0 20px 0 25px;
     cursor: pointer;
     div:nth-child(1){
         font-size: 12px;
@@ -11,9 +11,9 @@
         @media screen and (max-width: 821px) {
             font-size: 12px;
         }
+    }
 
-        // @media screen and (max-width: 444px) {
-        //     font-size: 10px;
-        // }
+    @media screen and (max-width: 440px) {
+        margin: 0 15px 0 10px;
     }
 }
