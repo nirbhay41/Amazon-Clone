@@ -7,11 +7,9 @@ type SideNavProps = {
     overlayRef: RefObject<HTMLDivElement>;
     closeBtnRef: RefObject<HTMLDivElement>;
     categories: string[];
-    menu: boolean;
-    setMenu: Function;
 }
 
-export default function SideNav({ categories, sideNavRef, overlayRef, closeBtnRef,menu,setMenu }: SideNavProps) {
+export default function SideNav({ categories, sideNavRef, overlayRef, closeBtnRef }: SideNavProps) {
     const closeSideNav = () => {
         closeBtnRef.current.style.display = "none";
         sideNavRef.current.style.width = "0";
