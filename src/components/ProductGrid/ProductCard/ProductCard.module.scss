@@ -1,0 +1,76 @@
+.productCard {
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    padding: 2.5rem;
+    margin: 1.25rem;
+    position: relative;
+    z-index: 102;
+
+    .category {
+        position: absolute;
+        top: 2px;
+        right: 10px;
+        font-size: 0.8rem;
+        color: gray;
+        line-height: 1rem;
+    }
+
+    .productName {
+        margin: 0.75rem 0 0.75rem 0;
+        line-height: 1.6rem;
+        font-weight: normal;
+    }
+
+    .rating {
+        display: flex;
+        margin: 0 0 0.7rem 0;
+    }
+
+    .description {
+        font-size: 0.8rem;
+        margin-bottom: 1rem;
+        //Line Clamp
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        line-height: 1.5;
+    }
+
+    .price {
+        margin-left: 3px;
+        margin-bottom: 10px;
+        @media screen and (max-width: 768px) {
+            margin-bottom: 1.5rem;
+        }
+    }
+
+    .prime{
+        display: flex;
+        align-items: center;
+
+        p{
+            color: gray;
+            margin-left: 20px;
+            font-size: 12px;
+        }
+    }
+
+    .addToCart {
+        margin-top: auto;
+        cursor: pointer;
+        border-radius: 2px;
+        border: none;
+        font-size: 1rem;
+        padding: 0.5rem;
+        background-color: rgba(252,211,77,1);
+        background-image: linear-gradient(to bottom, #fde68a, #fcdd73, #fbd35c, #fbc943, #fbbf24);
+        transition: 0.2s all;
+        
+        &:active{
+            transform: scale(0.98);
+            box-shadow: 3px 2px 22px 1px rgba(252,211,77,0.5);
+        }
+    }
+}
