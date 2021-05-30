@@ -1,6 +1,11 @@
 $light: #232F3E;
 $default: #131921;
 
+.header{
+    position: sticky;
+    top: 0;
+    z-index: 103;
+}
 
 .top_nav {
     display: flex;
