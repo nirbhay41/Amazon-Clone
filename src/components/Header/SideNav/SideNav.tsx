@@ -14,6 +14,7 @@ export default function SideNav({ categories, sideNavRef, overlayRef, closeBtnRe
         closeBtnRef.current.style.display = "none";
         sideNavRef.current.style.width = "0";
         overlayRef.current.style.display = "none";
+        document.body.style.overflow = "";
     }
 
     return (

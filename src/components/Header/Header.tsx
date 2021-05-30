@@ -26,6 +26,7 @@ export default function Header() {
         sideNavRef.current.style.width = "370px";
         overlayRef.current.style.display = "block";
         closeBtnRef.current.style.display = "block";
+        document.body.style.overflow = "hidden";
     }
 
     return (
