@@ -69,6 +69,10 @@ $default: #131921;
         }
     }
 
+    &:hover{
+        text-decoration: underline 0.2px;
+    }
+
     @media screen and (max-width: 470px) {
         flex: 0.4;
     }

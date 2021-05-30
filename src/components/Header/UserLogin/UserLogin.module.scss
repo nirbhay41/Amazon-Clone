@@ -13,6 +13,10 @@
         }
     }
 
+    &:hover{
+        text-decoration: underline 0.2px;
+    }
+
     @media screen and (max-width: 440px) {
         margin: 0 15px 0 10px;
     }

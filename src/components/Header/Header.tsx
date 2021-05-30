@@ -17,14 +17,12 @@ export default function Header() {
     const sideNavRef = useRef<HTMLDivElement>(null);
     const overlayRef = useRef<HTMLDivElement>(null);
     const closeBtnRef = useRef<HTMLDivElement>(null);
-    const [menu, setMenu] = useState(false);
 
     useEffect(() => {
         getCategories().then(res => setCategories(res));
     }, []);
 
     const openSideNav = () => {
-        setMenu(true);
         sideNavRef.current.style.width = "370px";
         overlayRef.current.style.display = "block";
         closeBtnRef.current.style.display = "block";
@@ -36,8 +34,6 @@ export default function Header() {
                 sideNavRef={sideNavRef}
                 overlayRef={overlayRef}
                 closeBtnRef={closeBtnRef}
-                menu={menu}
-                setMenu={setMenu}
             />
             <header className={styles.header}>
                 <div className={styles.top_nav}>
