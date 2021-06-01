@@ -5,7 +5,6 @@ import Header from '../components/Header/Header';
 import ProductGrid from '../components/ProductGrid/ProductGrid';
 import styles from '../styles/Home.module.css';
 
-
 export default function Home({products}:{products:Product[]}) {
   return (
     <>
@@ -18,7 +17,6 @@ export default function Home({products}:{products:Product[]}) {
         <Banner />
         <ProductGrid products={products}/>
       </main>
-      {/* products list */}
       {/* Footer */}
     </>
   )
