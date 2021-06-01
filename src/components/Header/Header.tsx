@@ -5,21 +5,28 @@ import SearchBar from './SearchBar/SearchBar';
 import UserLogin from './UserLogin/UserLogin';
 import SideNav from "./SideNav/SideNav";
 import { useEffect, useRef, useState } from "react";
-
-async function getCategories(): Promise<Array<string>> {
-    const res = await fetch('https://fakestoreapi.com/products/categories');
-    const categories = await res.json();
-    return categories;
-}
+import Link from 'next/link';
+import { useAppSelector } from "../../app/hooks";
 
 export default function Header() {
     const [categories, setCategories] = useState<string[]>([]);
     const sideNavRef = useRef<HTMLDivElement>(null);
     const overlayRef = useRef<HTMLDivElement>(null);
     const closeBtnRef = useRef<HTMLDivElement>(null);
+    const NO_OF_PRODUCTS_IN_BASKET = useAppSelector(state => state.basket.quantity);
 
     useEffect(() => {
-        getCategories().then(res => setCategories(res));
+        const abortController = new AbortController();
+
+        fetch('https://fakestoreapi.com/products/categories',{signal: abortController.signal})
+        .then(res => res.json())
+        .then(data => setCategories(data))
+        .catch(err => console.log('Error when fetching products category: \n'+err));
+
+        return () => {
+            console.log("Aborted....");
+            abortController.abort();
+        }
     }, []);
 
     const openSideNav = () => {
@@ -38,17 +45,18 @@ export default function Header() {
             />
             <header className={styles.header}>
                 <div className={styles.top_nav}>
-                    <div className={styles.nav_logo}>
-                        <Image
-                            className={styles.logo}
-                            src="/amazon_logo_primary.png"
-                            width={110}
-                            height={110}
-                            objectFit="contain"
-                        />
-                        <span>.in</span>
-                    </div>
-
+                    <Link href='/'>
+                        <div className={styles.nav_logo}>
+                            <Image
+                                className={styles.logo}
+                                src="/amazon_logo_primary.png"
+                                width={110}
+                                height={110}
+                                objectFit="contain"
+                            />
+                            <span>.in</span>
+                        </div>
+                    </Link>
                     <div className={styles.searchBar}>
                         <SearchBar categories={categories} />
                     </div>
@@ -62,13 +70,15 @@ export default function Header() {
                         <p>&Orders</p>
                     </div>
 
-                    <div className={styles.cart}>
-                        <div className={styles.cart_no} style={{ position: "relative" }}>
-                            <span className={styles.order_no}>0</span>
-                            <ShoppingCartIcon className={styles.carticon} />
+                    <Link href='/basket'>
+                        <div className={styles.cart}>
+                            <div className={styles.cart_no} style={{ position: "relative" }}>
+                                <span className={styles.order_no}>{NO_OF_PRODUCTS_IN_BASKET}</span>
+                                <ShoppingCartIcon className={styles.carticon} />
+                            </div>
+                            <span className={styles.cart_text}>Cart</span>
                         </div>
-                        <span className={styles.cart_text}>Cart</span>
-                    </div>
+                    </Link>
                 </div>
 
                 <div className={styles.lower_nav}>
