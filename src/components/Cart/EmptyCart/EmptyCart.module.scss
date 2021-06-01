@@ -1,0 +1,18 @@
+.emptycart{
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    padding: 2rem 0 2rem 1rem;
+    // max-width: 80vw;
+
+    .heading{
+        font-weight: 400;
+        font-size: 1.7rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .text{
+        font-size: 13.5px;
+        line-height: 1.4;
+    }
+}

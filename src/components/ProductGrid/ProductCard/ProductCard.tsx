@@ -1,28 +1,35 @@
 import { StarIcon } from '@heroicons/react/solid';
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+import { useAppDispatch } from '../../../app/hooks';
+import { addToBasket } from '../../../app/slices/basketSlice';
+import Button from '../../Button/Button';
 import styles from './ProductCard.module.scss';
 
 const MIN_RATING = 2;
 const MAX_RATING = 5;
 
 export default function ProductCard({product}:{product:Product}) {
-    const {title,category,description,price,image} = product;
+    const {id,title,category,description,price,image} = product;
     const [hasPrime] = useState(Math.random() < 0.5);
     const [rating] = useState(
         Math.floor(Math.random()*(MAX_RATING-MIN_RATING+1)) + MIN_RATING
     );
-    const [exchangeRate,setExchangeRate] = useState(0);
+    const dispatch = useAppDispatch();
 
-    const getExchangeRate = async () => {
-        const res = await fetch('/api/exchangeRate')
-        const rate:{USD_INR:number} = await res.json();
-        setExchangeRate(rate.USD_INR);
+    const addItemToBasket = () => {
+        dispatch(addToBasket({
+            id,
+            category,
+            description,
+            image,
+            price,
+            title,
+            rating,
+            hasPrime,
+            quantity: 1,
+        }));
     }
-
-    useEffect(() => {
-        getExchangeRate();
-    },[]);
 
     return (
         <div className={styles.productCard}>
@@ -40,7 +47,7 @@ export default function ProductCard({product}:{product:Product}) {
 
             <div className={styles.description}>{description}</div>
 
-            <div className={styles.price}>₹{(price*exchangeRate).toFixed(2)}</div>
+            <div className={styles.price}>₹{(price*72).toFixed(2)}</div>
             
             {hasPrime && 
                 <div className={styles.prime}>
@@ -49,7 +56,7 @@ export default function ProductCard({product}:{product:Product}) {
                 </div>
             }
 
-            <button className={styles.addToCart}>Add to Cart</button>
+            <Button inline_style={{marginTop: "auto"}} onClick={addItemToBasket}>Add to Cart</Button>
         </div>
     )
 }

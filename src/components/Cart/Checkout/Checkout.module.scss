@@ -1,0 +1,49 @@
+.checkout {
+    display: flex;
+    flex-direction: column;
+    flex: 0.4;
+    background-color: white;
+    height: 100%;
+    padding: 1rem 0 0 1rem;
+    row-gap: 0.5rem;
+
+    .checkOutList {
+        display: flex;
+        border-bottom: 1px solid#DDD;
+        margin: 5px 10px 10px 0px;
+        padding-bottom: 5px;
+        line-height: 1.5;
+        font-size: 15px;
+
+        .name {
+            display: flex;
+            align-items: center;
+            flex: 0.9;
+
+            p {
+                flex: 0.8;
+            }
+
+            span {
+                flex: 0.15;
+                text-align: center;
+            }
+
+            ;
+        }
+
+        strong {
+            flex: 0.1;
+            font-size: 1rem;
+        }
+    }
+
+    .total {
+        display: flex;
+        margin: 0 10px 15px 0;
+
+        p {
+            flex: 1;
+        }
+    }
+}

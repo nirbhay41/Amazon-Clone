@@ -56,21 +56,4 @@
             font-size: 12px;
         }
     }
-
-    .addToCart {
-        margin-top: auto;
-        cursor: pointer;
-        border-radius: 2px;
-        border: none;
-        font-size: 1rem;
-        padding: 0.5rem;
-        background-color: rgba(252,211,77,1);
-        background-image: linear-gradient(to bottom, #fde68a, #fcdd73, #fbd35c, #fbc943, #fbbf24);
-        transition: 0.2s all;
-        
-        &:active{
-            transform: scale(0.98);
-            box-shadow: 3px 2px 22px 1px rgba(252,211,77,0.5);
-        }
-    }
 }
