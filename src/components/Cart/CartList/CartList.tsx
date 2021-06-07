@@ -27,7 +27,7 @@ export default function CartList() {
 
 
 function CartItem({ product }: { product: Product }) {
-    const { id, image, title, rating, description, price, hasPrime,quantity } = product;
+    const { id, image, title, rating, description, price, hasPrime, quantity } = product;
     const dispatch = useAppDispatch();
 
     const removeFromCart = () => {
@@ -35,15 +35,13 @@ function CartItem({ product }: { product: Product }) {
     }
 
     const updateQty = (newQty: number) => {
-        dispatch(updateBasket({ id, qty: newQty}))
+        dispatch(updateBasket({ id, qty: newQty }))
     }
 
 
     return (
         <div className={styles.cartItem}>
-            <div className={styles.productImage}>
-                <Image src={image} width={240} height={200} objectFit='contain' />
-            </div>
+            <Image src={image} width={200} height={200} objectFit='contain' />
 
             <div className={styles.details}>
                 <div className={styles.title}>{title}</div>
@@ -64,14 +62,17 @@ function CartItem({ product }: { product: Product }) {
             <div className={styles.cartOptions}>
                 <div className={styles.qty}>
                     <p>Qty: </p>
-                    <select onChange={(e) => updateQty(parseInt(e.target.value))}>
+                    <select defaultValue={quantity} onChange={(e) => updateQty(parseInt(e.target.value))}>
                         {Array<number>(10).fill(0).map((_, idx) => (
                             <option value={idx + 1} key={idx}>{idx + 1}</option>
                         ))}
                     </select>
-                    <strong className={styles.price}>₹{(price * 72).toFixed(2)}</strong>
+                    <strong className={styles.price}>₹{price.toFixed(2)}</strong>
                 </div>
+
+                <div className={styles.removeBtn}>
                 <Button onClick={removeFromCart}>Remove From Basket</Button>
+                </div>
             </div>
         </div>
     );

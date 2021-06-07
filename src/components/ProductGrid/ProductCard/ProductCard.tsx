@@ -23,7 +23,7 @@ export default function ProductCard({product}:{product:Product}) {
             category,
             description,
             image,
-            price,
+            price:price*72,
             title,
             rating,
             hasPrime,

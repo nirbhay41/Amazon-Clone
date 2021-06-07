@@ -4,8 +4,8 @@ import Header from '../components/Header/Header';
 export default function basket() {
     return (
         <>
-        <Header />
-        <Cart />
+            <Header />
+            <Cart />
         </>
     )
 }
