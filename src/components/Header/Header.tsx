@@ -7,27 +7,57 @@ import SideNav from "./SideNav/SideNav";
 import { useEffect, useRef, useState } from "react";
 import Link from 'next/link';
 import { useAppSelector } from "../../app/hooks";
+import axios from "axios";
+import { useSession } from "next-auth/client";
 
-export default function Header() {
+export default function Header({clicked}:{clicked?: boolean}) {
     const [categories, setCategories] = useState<string[]>([]);
     const sideNavRef = useRef<HTMLDivElement>(null);
     const overlayRef = useRef<HTMLDivElement>(null);
     const closeBtnRef = useRef<HTMLDivElement>(null);
-    const NO_OF_PRODUCTS_IN_BASKET = useAppSelector(state => state.basket.quantity);
+    const [session] = useSession();
+    const basketSizeFromRedux = useAppSelector((state) => state.basket.products.length);
+    const [basketSizeFromDB, setBasketSizeFromDB] = useState<number | null>(null);
 
+    // For getting categories 
     useEffect(() => {
-        const abortController = new AbortController();
+        const cancelToken = axios.CancelToken;
+        const source = cancelToken.source();
 
-        fetch('https://fakestoreapi.com/products/categories',{signal: abortController.signal})
-        .then(res => res.json())
-        .then(data => setCategories(data))
-        .catch(err => console.log('Error when fetching products category: \n'+err));
+        axios.get('https://fakestoreapi.com/products/categories', {
+            cancelToken: source.token
+        })
+            .then(data => setCategories(data.data))
+            .catch(err => console.log('Error when fetching products category: \n' + err));
 
         return () => {
-            console.log("Aborted....");
-            abortController.abort();
+            source.cancel('Axios request aborted when fetching product categories');
         }
     }, []);
+
+    // For getting number of products from db
+    useEffect(() => {
+        const cancelToken = axios.CancelToken;
+        const source = cancelToken.source();
+
+        async function getFromDB() {
+            const res = await axios.post('/api/db/get_NO_OF_PRODUCTS', {
+                userEmail: session.user.email,
+            }, {
+                cancelToken: source.token
+            });
+
+            const { productNo } = res.data
+            setBasketSizeFromDB(productNo);
+        }
+
+        if (session)
+            getFromDB();
+
+        return () => {
+            source.cancel('Cancelled no of products fetch');
+        }
+    }, [session,clicked]);
 
     const openSideNav = () => {
         sideNavRef.current.style.width = "370px";
@@ -73,7 +103,9 @@ export default function Header() {
                     <Link href='/basket'>
                         <div className={styles.cart}>
                             <div className={styles.cart_no} style={{ position: "relative" }}>
-                                <span className={styles.order_no}>{NO_OF_PRODUCTS_IN_BASKET}</span>
+                                <span className={styles.order_no}>{
+                                    session ? basketSizeFromDB : basketSizeFromRedux
+                                }</span>
                                 <ShoppingCartIcon className={styles.carticon} />
                             </div>
                             <span className={styles.cart_text}>Cart</span>

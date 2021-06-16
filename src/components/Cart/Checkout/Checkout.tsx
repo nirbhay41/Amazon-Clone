@@ -1,19 +1,15 @@
-import { loadStripe } from '@stripe/stripe-js';
+import getStripe from '../../../utils/getStripe';
 import axios from 'axios';
-import { useSession } from 'next-auth/client';
-import { useAppSelector } from '../../../app/hooks';
 import Button from '../../Button/Button';
 import styles from './Checkout.module.scss';
-const stripePromise = loadStripe(process.env.stripe_public_key);
+import { useSession } from 'next-auth/client';
 
-export default function Checkout() {
-    const products = useAppSelector(state => state.basket.products);
-    const NO_OF_PRODUCTS = useAppSelector(state => state.basket.quantity);
+export default function Checkout({products}:{products: Product[]}) {
     const [session] = useSession();
+    let total = 0,NO_OF_PRODUCTS = 0;
 
-    let total = 0;
     const createCheckOutSession = async () => {
-        const stripe = await stripePromise;
+        const stripe = await getStripe();
         
         const checkOutSession = await axios.post('/api/create-checkout-session',{
             products,
@@ -32,14 +28,15 @@ export default function Checkout() {
         <div className={styles.checkout}>
             <h3>Checkout</h3>
             {products.map(p => {
-                total += p.price*p.quantity;
+                total += parseInt((p.price as string))*p.quantity;
+                NO_OF_PRODUCTS++;
                 return (
                     <div className={styles.checkOutList} key={p.id}>
                         <div className={styles.name}>
                             <p>{p.title}</p>
                             <span> x {p.quantity}</span>
                         </div>
-                        <strong>₹{(p.price*p.quantity).toFixed(2)}</strong>
+                        <strong>₹{(parseInt((p.price as string))*p.quantity).toFixed(2)}</strong>
                     </div>
                 )
             })}
