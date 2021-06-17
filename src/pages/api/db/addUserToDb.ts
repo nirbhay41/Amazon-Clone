@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { connectToDatabase } from "../../../utils/db";
 
-interface Order{
+export interface Order{
     productDetails: Product,
     name: string,
     email: string,
@@ -37,5 +37,8 @@ export default async(req: NextApiRequest,res: NextApiResponse) => {
         res.status(200).send({
             data: "Already User Exist"
         })
+    }else{
+        res.setHeader('Allow', 'POST');
+        res.status(405).end('Method Not Allowed');
     }
 }

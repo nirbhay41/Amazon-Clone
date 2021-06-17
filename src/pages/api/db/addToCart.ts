@@ -46,5 +46,8 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         }
 
         res.end();
+    }else{
+        res.setHeader('Allow', 'POST');
+        res.status(405).end('Method Not Allowed');
     }
 }
