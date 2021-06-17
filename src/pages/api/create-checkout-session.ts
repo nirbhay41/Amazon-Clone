@@ -43,10 +43,11 @@ export default async (req: NextApiRequest,res: NextApiResponse) => {
         line_items: transformedProductList,
         mode: 'payment',
         success_url: `${process.env.HOST}/success`,
-        cancel_url: `${process.env.HOST}/checkout`,
+        cancel_url: `${process.env.HOST}/basket`,
         metadata: {
             email,
             images: JSON.stringify(products.map((item: Product) => item.image)),
+            productsId: JSON.stringify(products.map((item: Product) => item.id)),
         }
     })
 

@@ -2,6 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { buffer } from "micro";
 import Stripe from "stripe";
 import Cors from 'micro-cors';
+import { connectToDatabase } from "../../utils/db";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
     apiVersion: '2020-08-27'
@@ -18,6 +19,31 @@ export const config = {
 const cors = Cors({
     allowMethods: ['POST', 'HEAD'],
 });
+
+const fullfillOrder = async (session: Stripe.Checkout.Session) => {
+    console.log('Fullfilling order ',session);
+    const {db} = await connectToDatabase();
+    // const order: Order = {
+    //     productDetails: session.line_items  
+    // }
+    db.collection(session.metadata.email).updateOne({},{
+        $push: {
+            "orders": {
+                "sessionId": session.id,
+                "productDetails": {
+                    "images": session.metadata.images,
+                    "productsId": session.metadata.productsId
+                },
+                "amount": session.amount_total / 100,
+                "amountShipping": session.total_details.amount_shipping / 100,
+                "paymentStatus": session.payment_status,
+                "shippingDetails": session.shipping
+            }
+        }
+    }).then(() => {
+        console.log('Order noted successfully: ',session.id);
+    });
+} 
 
 const webhookHandler = async (req: NextApiRequest, res: NextApiResponse) => {
     if (req.method === 'POST') {
@@ -54,7 +80,11 @@ const webhookHandler = async (req: NextApiRequest, res: NextApiResponse) => {
         } else if (stripeEvent.type === 'charge.succeeded') {
             const charge = stripeEvent.data.object as Stripe.Charge;
             console.log(`💵 Charge id: ${charge.id}`);
-        } else {
+        } else if(stripeEvent.type === 'checkout.session.completed'){
+            const session = stripeEvent.data.object as Stripe.Checkout.Session;
+            await fullfillOrder(session);
+        } 
+        else {
             console.warn(`🤷‍♀️ Unhandled event type: ${stripeEvent.type}`);
         }
 
