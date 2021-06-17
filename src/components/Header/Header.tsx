@@ -10,7 +10,7 @@ import { useAppSelector } from "../../app/hooks";
 import axios from "axios";
 import { useSession } from "next-auth/client";
 
-export default function Header({clicked}:{clicked?: boolean}) {
+export default function Header({ clicked }: { clicked?: boolean }) {
     const [categories, setCategories] = useState<string[]>([]);
     const sideNavRef = useRef<HTMLDivElement>(null);
     const overlayRef = useRef<HTMLDivElement>(null);
@@ -47,8 +47,11 @@ export default function Header({clicked}:{clicked?: boolean}) {
                 cancelToken: source.token
             });
 
-            const { productNo } = res.data
-            setBasketSizeFromDB(productNo);
+            if (res.data.productNo) {
+                setBasketSizeFromDB(res.data.productNo);
+            } else {
+                setBasketSizeFromDB(0);
+            }
         }
 
         if (session)
@@ -57,7 +60,7 @@ export default function Header({clicked}:{clicked?: boolean}) {
         return () => {
             source.cancel('Cancelled no of products fetch');
         }
-    }, [session,clicked]);
+    }, [session, clicked]);
 
     const openSideNav = () => {
         sideNavRef.current.style.width = "370px";
@@ -95,10 +98,12 @@ export default function Header({clicked}:{clicked?: boolean}) {
                         <UserLogin />
                     </div>
 
-                    <div className={styles.orders}>
-                        <div>Returns</div>
-                        <p>&Orders</p>
-                    </div>
+                    <Link href='/orders'>
+                        <div className={styles.orders}>
+                            <div>Returns</div>
+                            <p>&Orders</p>
+                        </div>
+                    </Link>
 
                     <Link href='/basket'>
                         <div className={styles.cart}>
