@@ -10,7 +10,7 @@ import { useAppSelector } from "../../app/hooks";
 import axios from "axios";
 import { useSession } from "next-auth/client";
 
-export default function Header({ clicked }: { clicked?: boolean }) {
+export default function Header() {
     const [categories, setCategories] = useState<string[]>([]);
     const sideNavRef = useRef<HTMLDivElement>(null);
     const overlayRef = useRef<HTMLDivElement>(null);
@@ -18,7 +18,7 @@ export default function Header({ clicked }: { clicked?: boolean }) {
     const [session] = useSession();
     const basketSizeFromRedux = useAppSelector((state) => state.basket.products.length);
     const [basketSizeFromDB, setBasketSizeFromDB] = useState<number | null>(null);
-
+    const render = useAppSelector(state => state.render); // Whenever its value changes we re-render
     // For getting categories 
     useEffect(() => {
         const cancelToken = axios.CancelToken;
@@ -60,7 +60,7 @@ export default function Header({ clicked }: { clicked?: boolean }) {
         return () => {
             source.cancel('Cancelled no of products fetch');
         }
-    }, [session, clicked]);
+    }, [session, render]);
 
     const openSideNav = () => {
         sideNavRef.current.style.width = "370px";

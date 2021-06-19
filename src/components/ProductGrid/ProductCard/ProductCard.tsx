@@ -2,10 +2,10 @@ import { StarIcon } from '@heroicons/react/solid';
 import axios from 'axios';
 import { useSession } from 'next-auth/client';
 import Image from 'next/image';
-import { Dispatch, SetStateAction, useContext, useState } from 'react';
+import { useState } from 'react';
 import { useAppDispatch } from '../../../app/hooks';
 import { addToBasket } from '../../../app/slices/basketSlice';
-import { setClickedContext } from '../../../pages';
+import { updateState } from '../../../app/slices/renderSlice';
 import Button from '../../Button/Button';
 import styles from './ProductCard.module.scss';
 
@@ -20,7 +20,6 @@ export default function ProductCard({ product }: { product: Product }) {
     );
     const dispatch = useAppDispatch();
     const [session] = useSession();
-    const {clicked,setClicked}:{clicked: boolean,setClicked: Dispatch<SetStateAction<boolean>>} = useContext(setClickedContext);
 
     const addItemToBasket = async () => {
         const productToAdd = {
@@ -42,7 +41,7 @@ export default function ProductCard({ product }: { product: Product }) {
             });
             const { data } = res.data;
             console.log(data);
-            setClicked(!clicked);
+            dispatch(updateState());
         } else dispatch(addToBasket(productToAdd));
     }
 

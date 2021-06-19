@@ -2,6 +2,7 @@ import { configureStore, getDefaultMiddleware} from '@reduxjs/toolkit';
 import basketReducer from './slices/basketSlice';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
+import renderReducer from './slices/renderSlice';
 
 const persistConfig = {
     key: 'root',
@@ -16,7 +17,8 @@ const customizedMiddleware = getDefaultMiddleware({
 
 export const store = configureStore({
     reducer: {
-        basket: persistedReducer
+        basket: persistedReducer,
+        render: renderReducer
     },
     middleware: customizedMiddleware,
 });
