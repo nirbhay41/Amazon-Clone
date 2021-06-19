@@ -1,13 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
+import { OrderDB } from "../../../types/order";
 import { connectToDatabase } from "../../../utils/db";
-
-export interface Order{
-    productDetails: Product,
-    name: string,
-    email: string,
-    shippingAddress: string,
-    paid: boolean,
-}
 
 export default async(req: NextApiRequest,res: NextApiResponse) => {
     if(req.method === 'POST'){
@@ -25,7 +18,7 @@ export default async(req: NextApiRequest,res: NextApiResponse) => {
                 const coll = await db.createCollection(userEmail);
                 await coll.insertOne({
                     cart: Array<Product>(),
-                    orders: Array<Order>(),
+                    orders: Array<OrderDB>(),
                 });
 
                 res.status(200).send({
