@@ -3,15 +3,19 @@ import axios from 'axios';
 import Button from '../../Button/Button';
 import styles from './Checkout.module.scss';
 import { useSession } from 'next-auth/client';
+import { useContext } from 'react';
+import { LoadingContext } from '../Cart';
 
 export default function Checkout({products}:{products: Product[]}) {
     const [session] = useSession();
+    const setLoading = useContext(LoadingContext);
     let total = 0,NO_OF_PRODUCTS = 0;
 
     const createCheckOutSession = async () => {
+        setLoading(true);
         const stripe = await getStripe();
         
-        const checkOutSession = await axios.post('/api/create-checkout-session',{
+        const checkOutSession = await axios.post('/api/stripe/create-checkout-session',{
             products,
             email: session.user.email,
         })

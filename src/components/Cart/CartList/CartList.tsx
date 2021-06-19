@@ -2,45 +2,21 @@ import { StarIcon } from '@heroicons/react/solid';
 import axios from 'axios';
 import { useSession } from 'next-auth/client';
 import Image from 'next/image';
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 import { removeFromBasket, updateBasket } from '../../../app/slices/basketSlice';
+import { updateState } from '../../../app/slices/renderSlice';
 import Button from '../../Button/Button';
 import Checkout from '../Checkout/Checkout';
 import styles from './CartList.module.scss';
 
-export default function CartList() {
-    const productsFromRedux = useAppSelector(state => state.basket.products);
-    const [productsFromDB, setProductsFromDB] = useState<Product[]>([]);
-    // For re rendering the CartList and Checkout component when something changes in db
-    const [render,setRender] = useState(false);
+type CartListProps = {
+    productsFromDB: Product[];
+    productsFromRedux: Product[];
+}
+
+export default function CartList(props: CartListProps) {
+    const {productsFromDB,productsFromRedux} = props;
     const [session] = useSession();
-
-    useEffect(() => {
-        const cancelToken = axios.CancelToken;
-        const source = cancelToken.source();
-
-        async function getProducts() {
-            const res = await axios.post('/api/db/getProducts', {
-                userEmail: session.user.email,
-            }, {
-                cancelToken: source.token
-            });
-
-            if(res.data.products){
-                setProductsFromDB(res.data.products);
-            }else {
-                setProductsFromDB([]);
-            }
-        }
-
-        if (session)
-            getProducts();
-
-        return () => {
-            source.cancel('GET Request cancelled for getting products')
-        }
-    }, [session, render]);
 
     return (
         <div className={styles.cartList}>
@@ -49,7 +25,7 @@ export default function CartList() {
                 <ul className={styles.list}>
                     {
                         (session ? productsFromDB : productsFromRedux).map(p => (
-                            <li key={p.id}><CartItem product={p} render={render} setRender={setRender}/></li>
+                            <li key={p.id}><CartItem product={p} /></li>
                         ))
                     }
                 </ul>
@@ -60,13 +36,7 @@ export default function CartList() {
     )
 }
 
-type CartItemProps = {
-    product: Product;
-    render: boolean;
-    setRender: Dispatch<SetStateAction<boolean>>;
-}
-
-function CartItem({ product, render, setRender}: CartItemProps) {
+function CartItem({ product }: {product: Product}) {
     const [session] = useSession();
     const { id, image, title, rating, description, price, hasPrime, quantity } = product;
     const dispatch = useAppDispatch();
@@ -78,7 +48,7 @@ function CartItem({ product, render, setRender}: CartItemProps) {
                 product
             });
 
-            setRender(!render);
+            dispatch(updateState());
             console.log(res.data);
         }else dispatch(removeFromBasket(id));
     }
@@ -91,7 +61,7 @@ function CartItem({ product, render, setRender}: CartItemProps) {
                 product
             });
 
-            setRender(!render);
+            dispatch(updateState());
             console.log(res.data);
         }else dispatch(updateBasket({ id, qty: newQty }))
     }
