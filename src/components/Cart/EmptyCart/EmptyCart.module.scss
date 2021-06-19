@@ -1,18 +1,32 @@
-.emptycart{
+.emptycart {
     display: flex;
     flex-direction: column;
     background-color: white;
-    padding: 2rem 0 2rem 1rem;
-    // max-width: 80vw;
+    padding: 1.2rem 1rem 1.2rem 1rem;
 
-    .heading{
+    .heading {
         font-weight: 400;
         font-size: 1.7rem;
         margin-bottom: 0.5rem;
+
+        @media screen and (max-width: 768px) and (min-width: 451px) {
+            font-size: 1.4rem;
+        }
+
+        @media screen and (max-width: 450px) {
+            font-size: 1.2rem;
+        }
     }
 
-    .text{
-        font-size: 13.5px;
+    .text {
+        font-size: 14px;
         line-height: 1.4;
+
+        @media screen and (max-width: 768px) {
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 2;
+        }
     }
 }
