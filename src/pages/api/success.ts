@@ -13,7 +13,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
         const subTotal = session.amount_subtotal;
         const total = session.amount_total;
-        const email = session.metadata.email;
+        const email = session.customer_details.email;
         const shipping = session.shipping;
         const amount_shipping = session.total_details.amount_shipping;
 

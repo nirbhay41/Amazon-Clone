@@ -9,7 +9,7 @@ export default function Home({ products }: { products: Product[] }) {
   return (
     <>
       <Head>
-        <title>Amazon 2.0</title>
+        <title>Amazon</title>
       </Head>
 
       <Header />
