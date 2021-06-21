@@ -35,4 +35,4 @@ yarn-error.log*
 public/amazon_logo_secondary.svg
 
 #executable
-stripe
+stripe-cli

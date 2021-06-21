@@ -24,9 +24,9 @@ export default function SideNav({ categories, sideNavRef, overlayRef, closeBtnRe
         <>
             <div className={styles.sidenav} ref={sideNavRef}>
                 <div className={styles.sidenav_bar}>
-                    <div className={styles.user} onClick={() => !session ? signin() : null}>
+                    <div className={styles.user}>
                         <UserCircleIcon className={styles.userIcon} />
-                        <span className={styles.text}>Hello, {session ? session.user.name : 'Sign In'}</span>
+                        <span className={styles.text} onClick={() => !session ? signin() : null}>Hello, {session ? session.user.name : 'Sign In'}</span>
                     </div>
 
                     <div className={styles.menu_item}>
