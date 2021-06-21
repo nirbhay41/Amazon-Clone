@@ -1,7 +1,7 @@
 import { ReactElement, RefObject } from 'react';
 import styles from './SideNav.module.scss';
 import { UserCircleIcon, ChevronRightIcon } from '@heroicons/react/solid';
-import { signout, useSession } from 'next-auth/client';
+import { signin, signout, useSession } from 'next-auth/client';
 
 type SideNavProps = {
     sideNavRef: RefObject<HTMLDivElement>;
@@ -24,9 +24,9 @@ export default function SideNav({ categories, sideNavRef, overlayRef, closeBtnRe
         <>
             <div className={styles.sidenav} ref={sideNavRef}>
                 <div className={styles.sidenav_bar}>
-                    <div className={styles.user}>
+                    <div className={styles.user} onClick={() => !session ? signin() : null}>
                         <UserCircleIcon className={styles.userIcon} />
-                        <span className={styles.text}>Hello, {session ? session.user.name : 'User'}</span>
+                        <span className={styles.text}>Hello, {session ? session.user.name : 'Sign In'}</span>
                     </div>
 
                     <div className={styles.menu_item}>
