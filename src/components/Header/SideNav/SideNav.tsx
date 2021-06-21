@@ -1,6 +1,7 @@
-import { ReactElement, RefObject, useEffect } from 'react';
+import { ReactElement, RefObject } from 'react';
 import styles from './SideNav.module.scss';
 import { UserCircleIcon, ChevronRightIcon } from '@heroicons/react/solid';
+import { signout, useSession } from 'next-auth/client';
 
 type SideNavProps = {
     sideNavRef: RefObject<HTMLDivElement>;
@@ -10,6 +11,8 @@ type SideNavProps = {
 }
 
 export default function SideNav({ categories, sideNavRef, overlayRef, closeBtnRef }: SideNavProps) {
+    const [session] = useSession();
+
     const closeSideNav = () => {
         closeBtnRef.current.style.display = "none";
         sideNavRef.current.style.width = "0";
@@ -23,7 +26,7 @@ export default function SideNav({ categories, sideNavRef, overlayRef, closeBtnRe
                 <div className={styles.sidenav_bar}>
                     <div className={styles.user}>
                         <UserCircleIcon className={styles.userIcon} />
-                        <span className={styles.text}>Hello, Nirbhay</span>
+                        <span className={styles.text}>Hello, {session ? session.user.name : 'User'}</span>
                     </div>
 
                     <div className={styles.menu_item}>
@@ -57,7 +60,7 @@ export default function SideNav({ categories, sideNavRef, overlayRef, closeBtnRe
                             <ul>
                                 <li key={1}><MenuOption name="Your Account"/></li>
                                 <li key={2}><MenuOption name="Customer Service"/></li>
-                                <li key={3}><MenuOption name="Sign Out"/></li>
+                                {session && <li key={3} ><MenuOption name="Sign Out" onClick={signout}/></li>}
                             </ul>
                         </div>
                     </div>
@@ -69,9 +72,9 @@ export default function SideNav({ categories, sideNavRef, overlayRef, closeBtnRe
     )
 }
 
-function MenuOption({ name }: { name: string }): ReactElement {
+function MenuOption({ name,onClick }: { name: string,onClick?: () => void }): ReactElement {
     return (
-        <div className={styles.menu_option}>
+        <div className={styles.menu_option} onClick={onClick}>
             <div className={styles.menu_name}>{name}</div>
             <ChevronRightIcon className={styles.chevron_right} />
         </div>
